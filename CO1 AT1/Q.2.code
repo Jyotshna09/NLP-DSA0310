@@ -1,0 +1,69 @@
+
+import re
+
+# E-commerce product catalogue
+products = [
+    "Laptop",
+    "Gaming Laptop",
+    "Laptop Bag",
+    "HP Laptop",
+    "Wireless Mouse",
+    "Wireless Keyboard",
+    "Smartphone",
+    "Phone Case"
+]
+
+def search_products(keyword, search_type):
+    matches = []
+    keyword_pattern = re.escape(keyword)
+
+    if search_type == "exact":
+        pattern = keyword_pattern
+        method = "fullmatch"
+
+    elif search_type == "prefix":
+        pattern = "^" + keyword_pattern
+        method = "search"
+
+    elif search_type == "suffix":
+        pattern = keyword_pattern + "$"
+        method = "search"
+
+    elif search_type == "partial":
+        pattern = keyword_pattern
+        method = "search"
+
+    else:
+        print("Invalid search type")
+        return
+
+    # Find all matching products
+    for product in products:
+        if method == "fullmatch":
+            result = re.fullmatch(pattern, product, re.IGNORECASE)
+        else:
+            result = re.search(pattern, product, re.IGNORECASE)
+
+        if result:
+            matches.append(product)
+
+    # Display search report
+    print("\nSearch Type:", search_type.upper())
+    print("Keyword:", keyword)
+
+    if matches:
+        print("Matching Products:")
+        for product in matches:
+            print("-", product)
+    else:
+        print("No matching products found")
+
+    print("Total Matching Products:", len(matches))
+
+
+# Test all required search types
+search_products("Laptop", "exact")
+search_products("Wireless", "prefix")
+search_products("Laptop", "suffix")
+search_products("phone", "partial")
+search_products("lApToP", "exact")
