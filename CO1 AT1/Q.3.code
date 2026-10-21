@@ -1,0 +1,55 @@
+
+import re
+
+# Student registration details
+register_no = "192424074"
+email = "student@saveetha.com"
+course_code = "DSA03"
+semester = "3"
+mobile = "9876543210"
+
+# Validate register number
+reg_valid = bool(re.fullmatch(r"\d{9}", register_no))
+
+# Validate institutional email
+email_valid = bool(re.fullmatch(
+    r"[\w.-]+@saveetha\.com", email, re.IGNORECASE
+))
+
+# Validate course code
+course_valid = bool(re.fullmatch(
+    r"[A-Za-z]{3}\d{2}", course_code
+))
+
+# Validate semester
+semester_valid = bool(re.fullmatch(r"[1-8]", semester))
+
+# Validate mobile number
+mobile_valid = bool(re.fullmatch(r"[6-9]\d{9}", mobile))
+
+# Display individual validation messages
+print("===== UNIVERSITY REGISTRATION REPORT =====")
+
+print("Register Number:",
+      "Valid" if reg_valid else "Invalid")
+
+print("Institutional Email:",
+      "Valid" if email_valid else "Invalid")
+
+print("Course Code:",
+      "Valid" if course_valid else "Invalid")
+
+print("Semester:",
+      "Valid" if semester_valid else "Invalid")
+
+print("Mobile Number:",
+      "Valid" if mobile_valid else "Invalid")
+
+# Generate final registration status
+if all([reg_valid, email_valid, course_valid,
+        semester_valid, mobile_valid]):
+    print("\nRegistration Status: SUCCESSFUL")
+    print("Student can proceed with enrollment.")
+else:
+    print("\nRegistration Status: FAILED")
+    print("Please correct the invalid fields.")
